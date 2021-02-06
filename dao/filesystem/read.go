@@ -1,21 +1,28 @@
 package filesystem
 
 import (
-	"fmt"
+	"encoding/json"
+	"io/ioutil"
 	"os"
-	"path/filepath"
 
-	"github.com/ahsan/todo/environment"
+	"github.com/ahsan/todo/logger"
 )
 
-func ListExists(listName string) (bool, error) {
-	if _, err := os.Stat(getListFullPath(listName)); err == nil {
-		return true, fmt.Errorf("todo list %s already exists.", listName)
+func loadJsonFile(listName string) TodoJson {
+	listFileFullPath := getListFullPath(listName)
+	marshalledByteArr, err := ioutil.ReadFile(listFileFullPath)
+	if err != nil {
+		logger.Error("Could not read JSON file")
 	}
-
-	return false, nil
+	var todoJson TodoJson
+	json.Unmarshal(marshalledByteArr, &todoJson)
+	return todoJson
 }
 
-func getListFullPath(listName string) string {
-	return filepath.Join(environment.GetNotesDir(), listName)
+func listExists(listName string) bool {
+	if _, err := os.Stat(getListFullPath(listName)); err == nil {
+		return true
+	}
+
+	return false
 }
