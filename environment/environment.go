@@ -16,7 +16,7 @@ func GetLogLevel() string {
 func getEnvVar(envVar string) string {
 	var value string = os.Getenv(envVar)
 	if value == "" {
-		fmt.Println("%s environment variable is unset.", envVar)
+		fmt.Println(envVar + " environment variable is unset.")
 	}
 	return value
 }
