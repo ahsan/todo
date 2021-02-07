@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/ahsan/todo/logger"
+	"github.com/ahsan/todo/types"
 )
 
 func AddTodo(listName string, todo string) bool {
@@ -14,7 +15,7 @@ func AddTodo(listName string, todo string) bool {
 		createListFile(listName)
 	}
 
-	currentTodoJson := loadJsonFile(listName)
+	currentTodoJson := GetTodoJson(listName)
 	updatedTodoJson, err := addTodoToJson(todo, currentTodoJson)
 	if err != nil {
 		return logger.Error("Could not update Json object")
@@ -24,7 +25,7 @@ func AddTodo(listName string, todo string) bool {
 	return writeJsonFile(listName, updatedTodoJson)
 }
 
-func addTodoToJson(todo string, todoJson TodoJson) (TodoJson, error) {
+func addTodoToJson(todo string, todoJson types.TodoJson) (types.TodoJson, error) {
 	// todo: think about deep copying
 	var biggestId int = -1
 	for _, todo := range todoJson.Todos {
@@ -34,7 +35,7 @@ func addTodoToJson(todo string, todoJson TodoJson) (TodoJson, error) {
 	}
 
 	var newTodoId = biggestId + 1
-	todoJson.Todos = append(todoJson.Todos, Todo{
+	todoJson.Todos = append(todoJson.Todos, types.Todo{
 		Id:          newTodoId,
 		Description: todo,
 	})
@@ -52,7 +53,7 @@ func createListFile(listName string) bool {
 	return false
 }
 
-func writeJsonFile(listName string, todoJson TodoJson) bool {
+func writeJsonFile(listName string, todoJson types.TodoJson) bool {
 	marshalled, err := json.Marshal(todoJson)
 	if err != nil {
 		return logger.Error("Could not convert TodoJson object to JSON: " + err.Error())
@@ -66,8 +67,8 @@ func writeJsonFile(listName string, todoJson TodoJson) bool {
 	return true
 }
 
-func emptyTodoJson() TodoJson {
-	return TodoJson{
-		Todos: []Todo{},
+func emptyTodoJson() types.TodoJson {
+	return types.TodoJson{
+		Todos: []types.Todo{},
 	}
 }

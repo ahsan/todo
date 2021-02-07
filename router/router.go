@@ -23,5 +23,13 @@ func Route(function string, args cli.Args) {
 		}
 		logger.Info(fmt.Sprintf("Added %d todo items.", l))
 		break
+
+	case "list":
+		var l int = args.Len()
+		if l > 0 {
+			logger.Warning(fmt.Sprintf("More arguments passed than expected: %d", l))
+		}
+		todos.GetTodosForToday()
+		break
 	}
 }

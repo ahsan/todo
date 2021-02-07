@@ -1,4 +1,4 @@
-package filesystem
+package types
 
 type TodoStatus struct {
 	InProgress bool `json:"inProgress"`

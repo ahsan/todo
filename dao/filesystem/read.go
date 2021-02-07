@@ -6,15 +6,22 @@ import (
 	"os"
 
 	"github.com/ahsan/todo/logger"
+	"github.com/ahsan/todo/types"
 )
 
-func loadJsonFile(listName string) TodoJson {
+func GetTodoJson(listName string) types.TodoJson {
 	listFileFullPath := getListFullPath(listName)
+
+	if !listExists(listName) {
+		logger.Info("Todo list does not exist")
+		return types.TodoJson{}
+	}
+
 	marshalledByteArr, err := ioutil.ReadFile(listFileFullPath)
 	if err != nil {
-		logger.Error("Could not read JSON file")
+		logger.Error("Could not read JSON file: " + err.Error())
 	}
-	var todoJson TodoJson
+	var todoJson types.TodoJson
 	json.Unmarshal(marshalledByteArr, &todoJson)
 	return todoJson
 }

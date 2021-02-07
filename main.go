@@ -23,6 +23,15 @@ func main() {
 					return nil
 				},
 			},
+			{
+				Name:    "list",
+				Aliases: []string{"l"},
+				Usage:   "list all todo tasks for today",
+				Action: func(c *cli.Context) error {
+					router.Route("list", c.Args())
+					return nil
+				},
+			},
 		},
 	}
 
