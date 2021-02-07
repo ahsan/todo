@@ -9,5 +9,5 @@ import (
 const DAEFAULT_FILE_PERM = 0644
 
 func getListFullPath(listName string) string {
-	return filepath.Join(environment.GetNotesDir(), listName)
+	return filepath.Join(environment.GetTodosDir(), listName)
 }

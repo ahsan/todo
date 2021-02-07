@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func GetNotesDir() string {
+func GetTodosDir() string {
 	return getEnvVar("TODO_DIR")
 }
 
