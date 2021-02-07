@@ -58,7 +58,6 @@ func writeJsonFile(listName string, todoJson types.TodoJson) bool {
 	if err != nil {
 		return logger.Error("Could not convert TodoJson object to JSON: " + err.Error())
 	}
-	fmt.Println("Marshalled: ", marshalled)
 	err = ioutil.WriteFile(getListFullPath(listName), marshalled, DAEFAULT_FILE_PERM)
 	if err != nil {
 		return logger.Error("Could not write todoJson to file: " + err.Error())

@@ -2,6 +2,7 @@ package types
 
 type TodoStatus struct {
 	InProgress bool `json:"inProgress"`
+	Paused     bool `json:"paused"`
 	Complete   bool `json:"complete"`
 }
 

@@ -23,6 +23,8 @@ func PrettyPrintTodos(todos []types.Todo) {
 func getStatusEmoji(todoStatus types.TodoStatus) string {
 	if todoStatus.InProgress {
 		return "🚧"
+	} else if todoStatus.Paused {
+		return "⏸"
 	} else if todoStatus.Complete {
 		return "✅"
 	} else {

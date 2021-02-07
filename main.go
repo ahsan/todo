@@ -32,6 +32,33 @@ func main() {
 					return nil
 				},
 			},
+			{
+				Name:    "start",
+				Aliases: []string{"s"},
+				Usage:   "Mark a todo as started",
+				Action: func(c *cli.Context) error {
+					router.Route("start", c.Args())
+					return nil
+				},
+			},
+			{
+				Name:    "pause",
+				Aliases: []string{"p"},
+				Usage:   "Mark a todo as paused",
+				Action: func(c *cli.Context) error {
+					router.Route("pause", c.Args())
+					return nil
+				},
+			},
+			{
+				Name:    "done",
+				Aliases: []string{"d"},
+				Usage:   "Mark a todo as done",
+				Action: func(c *cli.Context) error {
+					router.Route("done", c.Args())
+					return nil
+				},
+			},
 		},
 	}
 
