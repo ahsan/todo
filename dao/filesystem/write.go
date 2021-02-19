@@ -20,8 +20,6 @@ func AddTodo(listName string, todo string) bool {
 	if err != nil {
 		return logger.Error("Could not update Json object")
 	}
-	fmt.Println("Adding this todo to file: ")
-	fmt.Println(updatedTodoJson)
 	return writeJsonFile(listName, updatedTodoJson)
 }
 
