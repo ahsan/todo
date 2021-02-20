@@ -30,6 +30,10 @@ func MarkTodoAsComplete(listName string, todoId string) bool {
 	return filesystem.UpdateTodo(listName, strToInt(todoId), filesystem.ChangeStatusToDone)
 }
 
+func GetAllTodosByStatus(status types.TodoStatus) []types.Todo {
+	panic("Not implemented")
+}
+
 func strToInt(s string) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
