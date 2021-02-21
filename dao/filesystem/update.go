@@ -1,34 +1,46 @@
 package filesystem
 
 import (
+	"fmt"
+	"strconv"
+
+	"github.com/ahsan/todo/logger"
 	"github.com/ahsan/todo/types"
 )
 
-func ChangeStatusToInProgress(todo types.Todo) types.Todo {
+func changeStatusToInProgress(todo types.Todo) types.Todo {
 	todo.Status.InProgress = true
 	return todo
 }
 
-func ChangeStatusToPaused(todo types.Todo) types.Todo {
+func changeStatusToPaused(todo types.Todo) types.Todo {
 	todo.Status.Paused = true
 	return todo
 }
 
-func ChangeStatusToDone(todo types.Todo) types.Todo {
+func changeStatusToDone(todo types.Todo) types.Todo {
 	todo.Status.InProgress = false
 	todo.Status.Paused = false
 	todo.Status.Complete = true
 	return todo
 }
 
-func UpdateTodo(listName string, todoId int, updater func(types.Todo) types.Todo) bool {
-	todoJson := GetTodoJson(listName)
+func updateTodo(listName string, todoId string, updater func(types.Todo) types.Todo) bool {
+	todoJson := getTodoJson(listName)
 
 	for i, todo := range todoJson.Todos {
-		if todo.Id == todoId {
+		if todo.Id == strToInt(todoId) {
 			todoJson.Todos[i] = updater(todo)
 		}
 	}
 
 	return writeJsonFile(listName, todoJson)
+}
+
+func strToInt(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		logger.Error(fmt.Sprintf("Could not convert todoId %s to int", s))
+	}
+	return i
 }

@@ -1,10 +1,6 @@
 package todos
 
-import (
-	"github.com/ahsan/todo/dao"
-)
-
-func AddTodo(todo string) {
+func (t Todos) AddTodo(todo string) {
 	var todaysListName = getTodaysTodoList()
-	dao.AddTodoToList(todaysListName, todo)
+	t.dao.AddTodoToList(todaysListName, todo)
 }

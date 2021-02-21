@@ -22,8 +22,8 @@ func GetEnvVar(envVar string) string {
 	}
 
 	var value string = os.Getenv(envVar)
-	if value == "" {
-		fmt.Println(envVar + " environment variable is unset.")
-	}
+	// if value == "" {
+	// 	fmt.Println(envVar + " environment variable is unset.")
+	// }
 	return value
 }

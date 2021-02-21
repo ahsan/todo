@@ -9,7 +9,7 @@ import (
 	"github.com/ahsan/todo/types"
 )
 
-func GetTodoJson(listName string) types.TodoJson {
+func getTodoJson(listName string) types.TodoJson {
 	listFileFullPath := getListFullPath(listName)
 
 	if !listExists(listName) {

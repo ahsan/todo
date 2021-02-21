@@ -8,7 +8,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func Route(function string, args cli.Args) {
+func Route(function string, todos todos.Todos, args cli.Args) {
 	switch function {
 	case "add":
 		var l int = args.Len()

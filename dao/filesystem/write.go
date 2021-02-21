@@ -9,12 +9,12 @@ import (
 	"github.com/ahsan/todo/types"
 )
 
-func AddTodo(listName string, todo string) bool {
+func addTodoToList(listName string, todo string) bool {
 	if exists := listExists(listName); exists == false {
 		createListFile(listName)
 	}
 
-	currentTodoJson := GetTodoJson(listName)
+	currentTodoJson := getTodoJson(listName)
 	updatedTodoJson, err := addTodoToJson(todo, currentTodoJson)
 	if err != nil {
 		return logger.Error("Could not update Json object")
