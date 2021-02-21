@@ -21,14 +21,15 @@ func PrettyPrintTodos(todos []types.Todo) {
 	table.Render()
 }
 
-func getStatusEmoji(todoStatus types.TodoStatus) string {
-	if todoStatus.InProgress {
-		return "🚧"
-	} else if todoStatus.Paused {
-		return "⏸"
-	} else if todoStatus.Complete {
-		return "✅"
-	} else {
-		return "🦕"
+func getStatusEmoji(todoStatus string) string {
+	Info(todoStatus)
+	var statusMap = map[string]string{
+		types.Statuses["created"]:    "🦕",
+		types.Statuses["inProgress"]: "🚧",
+		types.Statuses["paused"]:     "⏸",
+		types.Statuses["complete"]:   "✅",
 	}
+	// Info(statusMap)
+	fmt.Println(statusMap)
+	return statusMap[todoStatus]
 }
