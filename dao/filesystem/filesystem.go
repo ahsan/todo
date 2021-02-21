@@ -1,6 +1,8 @@
 package filesystem
 
-import "github.com/ahsan/todo/types"
+import (
+	"github.com/ahsan/todo/types"
+)
 
 type FilesystemDAO struct{}
 
