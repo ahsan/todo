@@ -21,28 +21,28 @@ var logLevels = map[string]int{
 }
 
 func Error(logLine string) bool {
-	if logLevels[environment.GetLogLevel()] <= 3 {
+	if logLevels[environment.GetLogLevel()] >= logLevels["error"] {
 		fmt.Println(logLine)
 	}
 	return false
 }
 
 func Warning(logLine string) bool {
-	if logLevels[environment.GetLogLevel()] <= 4 {
+	if logLevels[environment.GetLogLevel()] >= logLevels["warning"] {
 		fmt.Println(logLine)
 	}
 	return true
 }
 
 func Info(logLine string) bool {
-	if logLevels[environment.GetLogLevel()] <= 6 {
+	if logLevels[environment.GetLogLevel()] >= logLevels["info"] {
 		fmt.Println(logLine)
 	}
 	return true
 }
 
 func Debug(logLine string) {
-	if logLevels[environment.GetLogLevel()] <= 7 {
+	if logLevels[environment.GetLogLevel()] >= logLevels["debug"] {
 		fmt.Println(logLine)
 	}
 }

@@ -5,10 +5,12 @@ import (
 	"os"
 
 	"github.com/ahsan/todo/router"
+	"github.com/ahsan/todo/todos"
 	"github.com/urfave/cli/v2"
 )
 
 func main() {
+	todos := todos.TodosFactory()
 	app := &cli.App{
 		Name:                 "todo",
 		Usage:                "keep track of your todo items on the cli",
@@ -19,7 +21,7 @@ func main() {
 				Aliases: []string{"a"},
 				Usage:   "add a task to today's list",
 				Action: func(c *cli.Context) error {
-					router.Route("add", c.Args())
+					router.Route("add", todos, c.Args())
 					return nil
 				},
 			},
@@ -28,7 +30,7 @@ func main() {
 				Aliases: []string{"l"},
 				Usage:   "list all todo tasks for today",
 				Action: func(c *cli.Context) error {
-					router.Route("list", c.Args())
+					router.Route("list", todos, c.Args())
 					return nil
 				},
 			},
@@ -37,7 +39,7 @@ func main() {
 				Aliases: []string{"s"},
 				Usage:   "Mark a todo as started",
 				Action: func(c *cli.Context) error {
-					router.Route("start", c.Args())
+					router.Route("start", todos, c.Args())
 					return nil
 				},
 			},
@@ -46,7 +48,7 @@ func main() {
 				Aliases: []string{"p"},
 				Usage:   "Mark a todo as paused",
 				Action: func(c *cli.Context) error {
-					router.Route("pause", c.Args())
+					router.Route("pause", todos, c.Args())
 					return nil
 				},
 			},
@@ -55,7 +57,7 @@ func main() {
 				Aliases: []string{"d"},
 				Usage:   "Mark a todo as done",
 				Action: func(c *cli.Context) error {
-					router.Route("done", c.Args())
+					router.Route("done", todos, c.Args())
 					return nil
 				},
 			},

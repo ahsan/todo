@@ -1,22 +1,21 @@
 package environment
 
 import (
-	"fmt"
 	"os"
 )
 
 func GetTodosDir() string {
-	return getEnvVar("TODO_DIR")
+	return GetEnvVar("TODO_DIR")
 }
 
 func GetLogLevel() string {
-	return getEnvVar("TODO_LOG_LEVEL")
+	return GetEnvVar("TODO_LOG_LEVEL")
 }
 
-func getEnvVar(envVar string) string {
+func GetEnvVar(envVar string) string {
 	var value string = os.Getenv(envVar)
-	if value == "" {
-		fmt.Println(envVar + " environment variable is unset.")
-	}
+	// if value == "" {
+	// 	fmt.Println(envVar + " environment variable is unset.")
+	// }
 	return value
 }
