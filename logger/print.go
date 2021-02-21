@@ -17,6 +17,7 @@ func PrettyPrintTodos(todos []types.Todo) {
 		table.Append([]string{fmt.Sprintf("%d", todo.Id), getStatusEmoji(todo.Status), todo.Description})
 	}
 	table.SetBorder(false)
+	table.SetRowLine(true)
 	table.Render()
 }
 
