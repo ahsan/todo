@@ -29,7 +29,5 @@ func getStatusEmoji(todoStatus string) string {
 		types.Statuses["paused"]:     "⏸",
 		types.Statuses["complete"]:   "✅",
 	}
-	// Info(statusMap)
-	fmt.Println(statusMap)
 	return statusMap[todoStatus]
 }
