@@ -3,6 +3,7 @@ package mongo
 import (
 	"context"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/ahsan/todo/logger"
@@ -14,8 +15,10 @@ import (
 type MongodbDAO struct{}
 
 func (m MongodbDAO) AddTodoToList(listName string, todo string) bool {
-	logger.Error("Not implemented")
-	return false
+	c := getClient()
+	defer c.cancel()
+
+	return writeToList(*c.ctx, *c.client, listName, todo)
 }
 
 func (m MongodbDAO) GetTodoList(listName string) []types.Todo {
@@ -26,18 +29,15 @@ func (m MongodbDAO) GetTodoList(listName string) []types.Todo {
 }
 
 func (m MongodbDAO) MarkTodoAsInProgress(listName string, todoId string) bool {
-	logger.Error("Not implemented")
-	return false
+	return m.updateStatus(listName, todoId, types.Statuses["inProgress"])
 }
 
 func (m MongodbDAO) MarkTodoAsPaused(listName string, todoId string) bool {
-	logger.Error("Not implemented")
-	return false
+	return m.updateStatus(listName, todoId, types.Statuses["paused"])
 }
 
 func (m MongodbDAO) MarkTodoAsComplete(listName string, todoId string) bool {
-	logger.Error("Not implemented")
-	return false
+	return m.updateStatus(listName, todoId, types.Statuses["complete"])
 }
 
 type getClientResponse struct {
@@ -53,4 +53,17 @@ func getClient() getClientResponse {
 		log.Fatal(err)
 	}
 	return getClientResponse{client: client, ctx: &ctx, cancel: cancel}
+}
+
+func (m MongodbDAO) updateStatus(listName string, todoId string, newStatus string) bool {
+	c := getClient()
+	defer c.cancel()
+
+	todoIdInt, err := strconv.Atoi(todoId)
+	if err != nil {
+		logger.Error("Could not convert todo id to integer")
+		return false
+	}
+
+	return updateTodoStatus(*c.ctx, *c.client, listName, todoIdInt, newStatus)
 }

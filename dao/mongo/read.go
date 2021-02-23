@@ -5,7 +5,9 @@ import (
 
 	"github.com/ahsan/todo/logger"
 	"github.com/ahsan/todo/types"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // Document model
@@ -19,20 +21,16 @@ import (
 }
 */
 
-// see types.go#Todo
-type MongoTodo struct {
-	Id          int    `json:"id" json:"id"`
-	ListName    string `json:"listName" json:"listName"`
-	Description string `json:"description" json:"description"`
-	Status      string `json:"status" json:"status"`
-}
-
 func readList(ctx context.Context, client mongo.Client, listName string) []types.Todo {
 	collection := client.Database("todo-app").Collection(TodoCollectionName)
 
 	var todos []types.Todo
 
-	cursor, err := collection.Find(ctx, map[string]string{"listName": listName})
+	opts := options.Find()
+
+	opts.SetSort(bson.D{{"id", 1}})
+
+	cursor, err := collection.Find(ctx, bson.D{{"listname", listName}})
 	if err != nil {
 		logger.Error("Could not read from MongoDB: " + err.Error())
 		panic(err)
@@ -45,7 +43,11 @@ func readList(ctx context.Context, client mongo.Client, listName string) []types
 			logger.Error("Could not decode")
 			break
 		}
+		logger.Debug(mongoTodo.String())
+
 		todos = append(todos, types.Todo{Id: mongoTodo.Id, Description: mongoTodo.Description, Status: mongoTodo.Status})
 	}
+
+	cursor.Close(ctx)
 	return todos
 }
