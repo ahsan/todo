@@ -35,6 +35,7 @@ func addTodoToJson(todo string, todoJson types.TodoJson) (types.TodoJson, error)
 	todoJson.Todos = append(todoJson.Todos, types.Todo{
 		Id:          newTodoId,
 		Description: todo,
+		Status:      types.Statuses["created"],
 	})
 	return todoJson, nil
 }

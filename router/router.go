@@ -17,11 +17,7 @@ func Route(function string, todos todos.Todos, args cli.Args) {
 			break
 		}
 
-		for _, todo := range args.Slice() {
-			logger.Debug("Adding todo: '" + todo + "'")
-			todos.AddTodo(todo)
-		}
-		logger.Info(fmt.Sprintf("Added %d todo items.", l))
+		todos.AddTodos(args.Slice())
 		break
 
 	case "list":

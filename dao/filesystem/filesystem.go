@@ -1,6 +1,9 @@
 package filesystem
 
-import "github.com/ahsan/todo/types"
+import (
+	"github.com/ahsan/todo/dao/shared"
+	"github.com/ahsan/todo/types"
+)
 
 type FilesystemDAO struct{}
 
@@ -13,13 +16,13 @@ func (f FilesystemDAO) GetTodoList(listName string) []types.Todo {
 }
 
 func (f FilesystemDAO) MarkTodoAsInProgress(listName string, todoId string) bool {
-	return updateTodo(listName, todoId, changeStatusToInProgress)
+	return updateTodo(listName, todoId, shared.ChangeStatusToInProgress)
 }
 
 func (f FilesystemDAO) MarkTodoAsPaused(listName string, todoId string) bool {
-	return updateTodo(listName, todoId, changeStatusToPaused)
+	return updateTodo(listName, todoId, shared.ChangeStatusToPaused)
 }
 
 func (f FilesystemDAO) MarkTodoAsComplete(listName string, todoId string) bool {
-	return updateTodo(listName, todoId, changeStatusToDone)
+	return updateTodo(listName, todoId, shared.ChangeStatusToDone)
 }

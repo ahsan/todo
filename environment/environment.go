@@ -1,7 +1,10 @@
 package environment
 
 import (
+	"fmt"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func GetTodosDir() string {
@@ -13,6 +16,11 @@ func GetLogLevel() string {
 }
 
 func GetEnvVar(envVar string) string {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println(".env file is not present.")
+	}
+
 	var value string = os.Getenv(envVar)
 	// if value == "" {
 	// 	fmt.Println(envVar + " environment variable is unset.")

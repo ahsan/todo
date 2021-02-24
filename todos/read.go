@@ -5,5 +5,8 @@ import (
 )
 
 func (t Todos) GetTodosForToday() {
-	logger.PrettyPrintTodos(t.dao.GetTodoList(getTodaysTodoList()))
+	l := t.dao.GetTodoList(getTodaysTodoList())
+	if l != nil {
+		logger.PrettyPrintTodos(l)
+	}
 }
